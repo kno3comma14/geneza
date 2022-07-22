@@ -1,4 +1,4 @@
-(ns geneza.api.schema-analyser
+(ns geneza.api.schema-analyzer
   (:require [geneza.db.datomic.util :as db-util]))
 
 
@@ -26,12 +26,15 @@
 
 (defn build-attribues
   [schema resource]
-  (let [datomic-attributes (filterv (fn [x] (= x (namespace (:db/ident x)))) schema)]
-    (map (fn [x] (datomic-attribute->geneza-attribute x)) datomic-attributes)))
+  (let [datomic-attributes (filterv (fn [x] (= resource (namespace (:db/ident x)))) schema)]
+    (mapv (fn [x] (datomic-attribute->geneza-attribute x)) datomic-attributes)))
 
 (defn build-relationships
-  [schema]
-  nil)
+  [schema resource]
+  (let [valid-attributes (filterv (fn [x] (not= resource (name (:db/ident x)))) schema)]
+    (mapv (fn[x] {:entity (namespace (:db/ident x))
+                 :cardinality (name (:db/cardinality x))})
+          valid-attributes)))
 
 (defn build-entity-data
   [db]
@@ -41,5 +44,6 @@
     nil))
 
 (defn generate-api-hierarchy
-  [db])
+  [db]
+  nil)
 
