@@ -61,7 +61,7 @@
 
 (defn- create-db
   []
-  (let [db-uri "datomic:mem://movie_data"
+  (let [db-uri "datomic:mem://movie_data00"
         created? (d/create-database db-uri)
         connection (when created?
                      (d/connect db-uri))]
