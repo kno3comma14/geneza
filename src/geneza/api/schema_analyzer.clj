@@ -8,33 +8,40 @@
 ;;           :db/doc "The age of the actor"})
 
 
-;; ;; Structure wanted
+;; ;; sample Structure wanted
 ;; (def structure {:entity-name "movie"
 ;;                 :attributes [{:type "string"
-;;                               :name "name"}
+;;                               :name "name"
+;;                               :ref {:cardinality one :target nil}}
 ;;                              {:type "string"
-;;                               :name "description"}]
-;;                 :relationships [{:entity "actor"
-;;                                  :cardinality :many}]})
+;;                               :name "description"
+;;                               :ref {:cardinality one :target nil}}]})
+
+(defn- clean-curlies
+  [target]
+  (subs target 1 (dec (count target))))
+
+(defn extract-target-entity
+  [target-doc]
+  (let [matcher (re-matcher #"\{\w+\}" target-doc)
+        possible-result (re-find matcher)]
+    (when (not (nil? possible-result))
+      (clean-curlies possible-result))))
 
 (defn datomic-attribute->geneza-attribute
   [datomic-attribute]
   (let [attribute-name (name (:db/ident datomic-attribute))
-        attribute-type (name (:db/valueType datomic-attribute))]
+        attribute-type (name (:db/valueType datomic-attribute))
+        attribute-cardinality (name (:db/cardinality datomic-attribute))
+        attribute-ref-target (extract-target-entity (:db/doc datomic-attribute))]
     {:type attribute-type
-     :name attribute-name}))
+     :name attribute-name
+     :ref {:cardinality attribute-cardinality :target attribute-ref-target}}))
 
-(defn build-attribues
+(defn build-attributes
   [schema resource]
   (let [datomic-attributes (filterv (fn [x] (= resource (namespace (:db/ident x)))) schema)]
     (mapv (fn [x] (datomic-attribute->geneza-attribute x)) datomic-attributes)))
-
-(defn build-relationships
-  [schema resource]
-  (let [valid-attributes (filterv (fn [x] (not= resource (name (:db/ident x)))) schema)]
-    (mapv (fn[x] {:entity (namespace (:db/ident x))
-                 :cardinality (name (:db/cardinality x))})
-          valid-attributes)))
 
 (defn build-entity-data
   [db]
