@@ -13,7 +13,11 @@
     (io/delete-file path)))
 
 (defn create-test-folders []
-  ;; TODO
+  ;; TODO ;; We have to create folders in order to test the folder deletion feature
+  nil)
+
+(defn delete-test-folders []
+  ;; TODO ;; This part have to be run after the tests to ensure the health of the project structure
   nil)
 
 (defn create-aux-folder-test-fixture
