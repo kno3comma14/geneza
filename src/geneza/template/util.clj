@@ -11,10 +11,10 @@
   (.mkdir (java.io.File. path)))
 
 (defn delete-aux-folder
-  [input-directory]
-  (when (.isDirectory input-directory)
-    (run! delete-aux-folder (.listFiles input-directory)))
-  (io/delete-file input-directory))
+  [target-file]
+  (when (.isDirectory target-file)
+    (run! delete-aux-folder (.listFiles target-file)))
+  (io/delete-file target-file))
 
 (defn create-aux-folder-hierarchi
   [folder-hierarchi]
