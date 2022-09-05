@@ -8,7 +8,9 @@
 
 (defn create-aux-folder
   [path]
-  (.mkdir (java.io.File. path)))
+  (.mkdir (if (string? path)
+            (io/file path)
+            path)))
 
 (defn delete-aux-folder
   [target-file]

@@ -9,6 +9,10 @@
                  (java.io.File. (str base-folder "/test-folder1/inner-1"))
                  (java.io.File. (str base-folder "/test-folder1/inner-1/inner-2"))
                  (java.io.File. (str base-folder "/test-folder1/base-level"))])
+(def hierarchy-paths [(java.io.File. (str base-folder "/test-hierarchy"))
+                 (java.io.File. (str base-folder "/test-hierarchy/inner-1"))
+                 (java.io.File. (str base-folder "/test-hierarchy/inner-1/inner-2"))
+                 (java.io.File. (str base-folder "/test-hierarchy/base-level"))])
 
 (defn create-test-folders
   [path-list]
@@ -32,7 +36,9 @@
   [single-path hierarchi-path]
   (initial-folder-deletion single-path)
   (when (.exists (nth hierarchi-path 0))
-    (delete-test-folders hierarchi-path)))
+    (delete-test-folders hierarchi-path))
+  (when (.exists (nth hierarchy-paths 0))
+    (delete-test-folders hierarchy-paths)))
 
 ;; Fixtures definition
 
@@ -64,3 +70,10 @@
           _ (util/delete-aux-folder (nth test-paths 0))
           post-existence-condition (.exists (nth test-paths 0))]
       (is (and pre-existence-condition (not post-existence-condition))))))
+
+(deftest create-aux-folder-hierarchi-test
+  (testing "The complete folder hierarchi is deleted"
+    (let [pre-existence-condition (.exists (nth hierarchy-paths 0))
+          _ (util/create-aux-folder-hierarchi hierarchy-paths)
+          post-existence-condition (.exists (nth hierarchy-paths 0))]
+      (is (and (not pre-existence-condition) post-existence-condition)))))
