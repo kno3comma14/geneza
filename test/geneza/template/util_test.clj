@@ -31,7 +31,8 @@
 (defn teardown
   [single-path hierarchi-path]
   (initial-folder-deletion single-path)
-  (delete-test-folders hierarchi-path))
+  (when (.exists (nth hierarchi-path 0))
+    (delete-test-folders hierarchi-path)))
 
 ;; Fixtures definition
 
@@ -52,12 +53,14 @@
       (is (= expected-value actual-value)))))
 
 (deftest create-aux-folder-test
-  (testing "The folder have created succesfully"
+  (testing "The folder has beencreated succesfully"
     (util/create-aux-folder test-file-path)
     (let [file-exists? (.exists (io/file test-file-path))]
       (is  file-exists?))))
 
 (deftest delete-aux-folder-test
   (testing "The aux-folder is succesfully deleted"
-    ;; TODO Pending
-    ))
+    (let [pre-existence-condition (.exists (nth test-paths 0))
+          _ (util/delete-aux-folder (nth test-paths 0))
+          post-existence-condition (.exists (nth test-paths 0))]
+      (is (and pre-existence-condition (not post-existence-condition))))))

@@ -12,9 +12,12 @@
 
 (defn delete-aux-folder
   [target-file]
-  (when (.isDirectory target-file)
-    (run! delete-aux-folder (.listFiles target-file)))
-  (io/delete-file target-file))
+  (let [tf (if (string? target-file)
+             (io/file target-file)
+             target-file)]
+    (when (.isDirectory tf)
+      (run! delete-aux-folder (.listFiles tf)))
+    (io/delete-file tf)))
 
 (defn create-aux-folder-hierarchi
   [folder-hierarchi]
