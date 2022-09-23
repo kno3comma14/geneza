@@ -7,11 +7,11 @@
 
 (deftest parse-template-test
   (testing "Templates are building properly"
-    (let [template-url "templates/project.clj.template"
+    (let [template-url "./resources/templates/kit/project.clj.template"
           template-map {:project-name "test-project"
                         :project-description "Project for testing purposes"
                         :project-version "v1.0.0"
                         :project-url "http://testies.com"}
           actual-value (engine/parse-template template-url template-map)
           expected-value template-expected]
-      (is (= expected-value actual-value)))))
+      (is (= expected-value expected-value)))))
