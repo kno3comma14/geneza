@@ -3,9 +3,11 @@
             [geneza.template.util :as util]
             [clojure.java.io :as io]))
 
+(parser/set-resource-path! (clojure.java.io/resource "templates"))
+
 (defn parse-template
   [template-file-url template-map]
-  (parser/render-file template-file-url template-map))
+  (parser/render-file  template-file-url template-map))
 
 (defn build-template
   [template-file-url template-map target-folder-path template-name]

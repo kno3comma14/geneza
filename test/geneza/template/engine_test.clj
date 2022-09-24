@@ -7,7 +7,7 @@
 
 (deftest parse-template-test
   (testing "Templates are building properly"
-    (let [template-url "./resources/templates/kit/project.clj.template"
+    (let [template-url "kit/project.clj.template"
           template-map {:project-name "test-project"
                         :project-description "Project for testing purposes"
                         :project-version "v1.0.0"
