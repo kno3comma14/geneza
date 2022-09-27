@@ -14,7 +14,7 @@
                         :project-url "http://testies.com"}
           actual-value (engine/parse-template template-url template-map)
           expected-value constants/project-clj-content]
-      (is (= expected-value expected-value)))))
+      (is (= expected-value actual-value)))))
 
 (deftest build-template-test
   (testing "Templates are being built correctly"
@@ -23,9 +23,9 @@
                         :project-description "Project for testing purposes"
                         :project-version "v1.0.0"
                         :project-url "http://testies.com"}
-          temporal-folder "temp/"
+          temporal-folder "resources/temp/"
           template-name "project.clj"
-          _ (engine/build-template template-file-url template-map temporal-folder template-map)
+          _ (engine/build-template template-file-url template-map temporal-folder template-name)
           existence-validator (.exists (io/file (str temporal-folder template-name)))
           expected-value true]
       (is (= existence-validator expected-value)))))

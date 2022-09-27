@@ -13,5 +13,6 @@
   [template-file-url template-map target-folder-path template-name]
   (let [pre-template (parse-template template-file-url template-map)
         built-path (util/get-file-directory target-folder-path)]
-    (prn pre-template)
-    (io/file built-path template-name)))
+    (with-open [w (io/writer (str built-path template-name))]
+      (.write w pre-template))))
+
