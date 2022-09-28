@@ -1,9 +1,24 @@
 (ns geneza.template.engine-test
-  (:require [clojure.test :refer [deftest testing is]]
+  (:require [clojure.test :refer [deftest testing is use-fixtures]]
             [geneza.test-constants :as constants]
             [geneza.template.engine :as engine]
+            [geneza.template.util :as util]
             [clojure.java.io :as io]))
 
+(def project-clj-file "resources/temp/project.clj")
+
+;; Fixtures Definition
+(defn teardown
+  [file-to-delete]
+  (when (.exists (io/file file-to-delete))
+    (util/delete-aux-file file-to-delete)))
+
+(defn engine-test-fixture
+  [f]
+  f
+  (teardown project-clj-file))
+
+(use-fixtures :once engine-test-fixture)
 
 (deftest parse-template-test
   (testing "Templates are being parsed correctly"
