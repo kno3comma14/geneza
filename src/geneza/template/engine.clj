@@ -25,4 +25,9 @@
   (let [folders (extract-folders project-structure-info)]
     (util/create-aux-folder-hierarhi folders)
     (doseq [f folders]
-      (let [template-info]))))
+      (let [template-info (get-in project-structure-info [:folder-structure (keyword f)])
+            template-file-url (str (:template-path template-info) (:template template-info))
+            template-map (:template-map template-info)
+            target-folder-path (:file-path template-info)
+            template-name (:filename template-info)]
+        (build-template template-file-url template-map target-folder-path template-name)))))
