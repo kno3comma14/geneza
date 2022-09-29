@@ -18,8 +18,11 @@
 
 (defn- extract-folders
   [project-structure-info]
-  (map name (keys (:folder-structure project-structure-info))))
+  (keys (map name (:folder-structure project-structure-info))))
 
 (defn build-project-hierarchy
   [project-structure-info]
-  nil) ;; TODO Implementation
+  (let [folders (extract-folders project-structure-info)]
+    (util/create-aux-folder-hierarhi folders)
+    (doseq [f folders]
+      (let [template-info]))))

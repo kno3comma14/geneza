@@ -6,12 +6,21 @@
             [clojure.java.io :as io]))
 
 (def project-clj-file "resources/temp/project.clj")
-(def project-structure-info {:folder-structure {:tmp1 [{:template "template_uri1.template"
-                                                        :file "file1.txt"}
+(def project-structure-info {:type "kit"
+                             :version "alpha-0.0.1"
+                             :folder-structure {:tmp1 [{:template "template_uri1.template"
+                                                        :template-path ""
+                                                        :template-map {}
+                                                        :file-path "file1.txt"}
                                                        {:template "template_uri2.template"
-                                                        :file "file2.txt"}]
+                                                        :template-path ""
+                                                        :template-map {}
+                                                        :file-path "file2.txt"}]
                                                 :tmp2 [{:template "template_uri3.template"
-                                                        :file "file3.txt"}]}})
+                                                        :template-path ""
+                                                        :template-map {}
+                                                        :file-path "file3.txt"}]}
+                             :context {}})
 
 ;; Fixtures Definition
 (defn teardown
