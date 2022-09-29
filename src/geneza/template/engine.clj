@@ -16,3 +16,10 @@
     (with-open [w (io/writer (str built-path template-name))]
       (.write w pre-template))))
 
+(defn- extract-folders
+  [project-structure-info]
+  (map name (keys (:folder-structure project-structure-info))))
+
+(defn build-project-hierarchy
+  [project-structure-info]
+  nil) ;; TODO Implementation

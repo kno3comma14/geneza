@@ -6,6 +6,12 @@
             [clojure.java.io :as io]))
 
 (def project-clj-file "resources/temp/project.clj")
+(def project-structure-info {:folder-structure {:tmp1 [{:template "template_uri1.template"
+                                                        :file "file1.txt"}
+                                                       {:template "template_uri2.template"
+                                                        :file "file2.txt"}]
+                                                :tmp2 [{:template "template_uri3.template"
+                                                        :file "file3.txt"}]}})
 
 ;; Fixtures Definition
 (defn teardown
@@ -19,6 +25,8 @@
   (teardown project-clj-file))
 
 (use-fixtures :once engine-test-fixture)
+
+;; End of fixture definitions
 
 (deftest parse-template-test
   (testing "Templates are being parsed correctly"
@@ -44,3 +52,6 @@
           existence-validator (.exists (io/file (str temporal-folder template-name)))
           expected-value true]
       (is (= existence-validator expected-value)))))
+
+(deftest build-project-hierarchy-test
+  (testing "Project hierarchy built correctly"))
