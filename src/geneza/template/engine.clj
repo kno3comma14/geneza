@@ -23,7 +23,7 @@
 (defn build-project-hierarchy
   [project-structure-info]
   (let [folders (extract-folders project-structure-info)]
-    (util/create-aux-folder-hierarhi folders)
+    (util/create-aux-folder-hierarchi folders)
     (doseq [f folders]
       (let [template-info (get-in project-structure-info [:folder-structure (keyword f)])
             template-file-url (str (:template-path template-info) (:template template-info))
