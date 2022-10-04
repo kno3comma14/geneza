@@ -3,6 +3,7 @@
             [clojure.java.io :as io]
             [geneza.template.util :as util]))
 
+(def project-clj-file "resources/temp/project.clj")
 (def test-file-path (str (System/getProperty "user.dir") "/resources/aux-folder"))
 (def base-folder (str (System/getProperty "user.dir") "/resources"))
 (def test-paths [(java.io.File. (str base-folder "/test-folder1"))
@@ -38,7 +39,9 @@
   (when (.exists (nth hierarchi-path 0))
     (delete-test-folders hierarchi-path))
   (when (.exists (nth hierarchy-paths 0))
-    (delete-test-folders hierarchy-paths)))
+    (delete-test-folders hierarchy-paths))
+  (when (.exists (io/as-file project-clj-file))
+    (util/delete-aux-file project-clj-file)))
 
 ;; Fixtures definition
 

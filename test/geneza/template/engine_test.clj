@@ -20,21 +20,6 @@
                                                         :file-path "file3.txt"}]}
                              :context {}}) ;; temporal reference
 
-;; Fixtures Definition
-(defn teardown
-  [file-to-delete]
-  (when (.exists (io/file file-to-delete))
-    (util/delete-aux-file file-to-delete)))
-
-(defn engine-test-fixture
-  [f]
-  f
-  (teardown project-clj-file))
-
-(use-fixtures :once engine-test-fixture)
-
-;; End of fixture definitions
-
 (deftest parse-template-test
   (testing "Templates are being parsed correctly"
     (let [template-url "kit/project.clj.template"
@@ -61,4 +46,10 @@
       (is (= existence-validator expected-value)))))
 
 (deftest build-project-hierarchy-test
-  (testing "Project hierarchy built correctly"))
+  (testing "Project hierarchy built correctly"
+    (let [project-structure-info {}
+          _ (engine/build-project-hierarchy project-structure-info)
+          existence-validator false]
+      (is (= existence-validator true)))))
+
+
