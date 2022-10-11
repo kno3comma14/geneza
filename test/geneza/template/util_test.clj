@@ -18,6 +18,7 @@
                  (java.io.File. (str base-folder "/test-hierarchy/inner-1"))
                  (java.io.File. (str base-folder "/test-hierarchy/inner-1/inner-2"))
                  (java.io.File. (str base-folder "/test-hierarchy/base-level"))])
+(def temp-paths [(java.io.File. (str base-folder "/temp/another-folder"))])
 
 (defn create-test-folders
   [path-list]
@@ -40,6 +41,8 @@
 (defn teardown
   [single-path hierarchi-path]
   (initial-folder-deletion single-path)
+  (when (.exists (nth temp-paths 0))
+    (delete-test-folders temp-paths))
   (when (.exists (nth hierarchi-path 0))
     (delete-test-folders hierarchi-path))
   (when (.exists (nth hierarchy-paths 0))
