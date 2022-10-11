@@ -49,8 +49,11 @@
 (deftest build-project-hierarchy-test
   (testing "Project hierarchy built correctly"
     (let [_ (engine/build-project-hierarchy project-structure-info)
-          existence-validator false
-          expected-value true]
-      (is (= existence-validator true)))))
+          dockerfile-existence-validator (.exists (io/file "resources/temp/Dockerfile"))
+          makefile-existence-validator (.exists (io/file "resources/temp/another-folder/Makefile"))
+          project-clj-existence-validator (.exists (io/file "resources/temp/project2.clj"))
+          actual-existence-value (and dockerfile-existence-validator makefile-existence-validator project-clj-existence-validator)
+          expected-existence-value true]
+      (is (= expected-existence-value actual-existence-value)))))
 
 
