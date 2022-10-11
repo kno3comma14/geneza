@@ -18,16 +18,18 @@
 
 (defn- extract-folders
   [project-structure-info]
-  (keys (map name (:folder-structure project-structure-info))))
+  (keys (:folder-structure project-structure-info)))
 
 (defn build-project-hierarchy
   [project-structure-info]
-  (let [folders (extract-folders project-structure-info)]
-    (util/create-aux-folder-hierarchi folders)
+  (let [folders (extract-folders project-structure-info)
+        folders-to-build (filter (fn [x] (seq x)) folders)]
+    (util/create-aux-folder-hierarchi (map (fn [x] (util/get-file-directory x)) folders-to-build))
     (doseq [f folders]
-      (let [template-info (get-in project-structure-info [:folder-structure (keyword f)])
-            template-file-url (str (:template-path template-info) (:template template-info))
-            template-map (:template-map template-info)
-            target-folder-path (:file-path template-info)
-            template-name (:filename template-info)]
-        (build-template template-file-url template-map target-folder-path template-name)))))
+      (doseq [template-info (get-in project-structure-info [:folder-structure f])]
+        (prn "Template information: " template-info)
+        (let [template-file-url (str (:template-path template-info) "/" (:template template-info))
+              template-map (:template-map template-info)
+              target-folder-path (:file-path template-info)
+              template-name (:filename template-info)]
+          (build-template template-file-url template-map target-folder-path template-name))))))

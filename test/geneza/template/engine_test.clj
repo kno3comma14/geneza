@@ -6,18 +6,21 @@
             [clojure.java.io :as io]))
 
 (def project-clj-file "resources/temp/project.clj")
-(def project-structure-info {:folder-structure {:tmp1 [{:template "template_uri1.template"
-                                                        :template-path ""
-                                                        :template-map {}
-                                                        :file-path "file1.txt"}
-                                                       {:template "template_uri2.template"
-                                                        :template-path ""
-                                                        :template-map {}
-                                                        :file-path "file2.txt"}]
-                                                :tmp2 [{:template "template_uri3.template"
-                                                        :template-path ""
-                                                        :template-map {}
-                                                        :file-path "file3.txt"}]}
+(def project-structure-info {:folder-structure {"" [{:template "project.clj.template"
+                                                     :template-path "kit"
+                                                     :template-map {:project-name "test-project"
+                                                                    :project-description "Project for testing purposes"
+                                                                    :project-version "v1.0.0"
+                                                                    :project-url "http://testies.com"}
+                                                     :file-path "resources/temp/project.clj"}
+                                                    {:template "Dockerfile.template"
+                                                     :template-path "kit"
+                                                     :template-map {:application-name "test-project"}
+                                                     :file-path "resources/temp/Dockerfile"}]
+                                                "another-folder" [{:template "Makefile.template"
+                                                                   :template-path "kit"
+                                                                   :template-map {}
+                                                                   :file-path "resources/temp/Makefile"}]}
                              :context {}}) ;; temporal reference
 
 (deftest parse-template-test
@@ -47,9 +50,9 @@
 
 (deftest build-project-hierarchy-test
   (testing "Project hierarchy built correctly"
-    (let [project-structure-info {}
-          _ (engine/build-project-hierarchy project-structure-info)
-          existence-validator false]
+    (let [_ (engine/build-project-hierarchy project-structure-info)
+          existence-validator false
+          expected-value true]
       (is (= existence-validator true)))))
 
 
