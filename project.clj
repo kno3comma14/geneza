@@ -9,5 +9,6 @@
                  [selmer "1.12.53"]]
   :main ^:skip-aot geneza.core
   :target-path "target/%s"
+  :resource-paths ["resources"]
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})

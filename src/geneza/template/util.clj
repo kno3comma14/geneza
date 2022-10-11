@@ -21,6 +21,13 @@
       (run! delete-aux-folder (.listFiles tf)))
     (io/delete-file tf)))
 
+(defn delete-aux-file
+  [target-file]
+  (let [tf (if (string? target-file)
+             (io/file target-file)
+             target-file)]
+    (io/delete-file tf)))
+
 (defn create-aux-folder-hierarchi
   [folder-hierarchi]
   (doseq [folder folder-hierarchi]
