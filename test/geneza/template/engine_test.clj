@@ -2,7 +2,6 @@
   (:require [clojure.test :refer [deftest testing is]]
             [geneza.test-constants :as constants]
             [geneza.template.engine :as engine]
-            [geneza.template.util :as util]
             [clojure.java.io :as io]))
 
 (def project-clj-file "resources/temp/project.clj")
@@ -12,7 +11,7 @@
                                                                     :project-description "Project for testing purposes"
                                                                     :project-version "v1.0.0"
                                                                     :project-url "http://testies.com"}
-                                                     :file-path "resources/temp/project.clj"}
+                                                     :file-path "resources/temp/project2.clj"}
                                                     {:template "Dockerfile.template"
                                                      :template-path "kit"
                                                      :template-map {:application-name "test-project"}
