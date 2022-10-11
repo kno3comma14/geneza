@@ -4,6 +4,10 @@
             [geneza.template.util :as util]))
 
 (def project-clj-file "resources/temp/project.clj")
+(def project-clj2-file "resources/temp/project2.clj")
+(def dockerfile-file "resources/temp/Dockerfile")
+(def makefile-file "resources/temp/another-folder/Makefile")
+
 (def test-file-path (str (System/getProperty "user.dir") "/resources/aux-folder"))
 (def base-folder (str (System/getProperty "user.dir") "/resources"))
 (def test-paths [(java.io.File. (str base-folder "/test-folder1"))
@@ -41,7 +45,13 @@
   (when (.exists (nth hierarchy-paths 0))
     (delete-test-folders hierarchy-paths))
   (when (.exists (io/as-file project-clj-file))
-    (util/delete-aux-file project-clj-file)))
+    (util/delete-aux-file project-clj-file))
+  (when (.exists (io/as-file project-clj2-file))
+    (util/delete-aux-file project-clj2-file))
+  (when (.exists (io/as-file dockerfile-file))
+    (util/delete-aux-file dockerfile-file))
+  (when (.exists (io/as-file makefile-file))
+    (util/delete-aux-file makefile-file)))
 
 ;; Fixtures definition
 
