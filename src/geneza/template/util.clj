@@ -4,7 +4,7 @@
 (defn get-file-directory
   "Returns canonical path of a given path"
   [path]
-  (str (.getCanonicalPath (io/file path)) "/"))
+  (.getCanonicalPath (io/file path)))
 
 (defn create-aux-folder
   [path]

@@ -1,5 +1,5 @@
 (ns geneza.template.engine-test
-  (:require [clojure.test :refer [deftest testing is use-fixtures]]
+  (:require [clojure.test :refer [deftest testing is]]
             [geneza.test-constants :as constants]
             [geneza.template.engine :as engine]
             [geneza.template.util :as util]
@@ -20,7 +20,7 @@
                                                 "another-folder" [{:template "Makefile.template"
                                                                    :template-path "kit"
                                                                    :template-map {}
-                                                                   :file-path "resources/temp/Makefile"}]}
+                                                                   :file-path "resources/temp/another-folder/Makefile"}]}
                              :context {}}) ;; temporal reference
 
 (deftest parse-template-test
@@ -41,10 +41,9 @@
                         :project-description "Project for testing purposes"
                         :project-version "v1.0.0"
                         :project-url "http://testies.com"}
-          temporal-folder "resources/temp/"
-          template-name "project.clj"
-          _ (engine/build-template template-file-url template-map temporal-folder template-name)
-          existence-validator (.exists (io/file (str temporal-folder template-name)))
+          temporal-folder "resources/temp/project.clj"
+          _ (engine/build-template template-file-url template-map temporal-folder)
+          existence-validator (.exists (io/file temporal-folder))
           expected-value true]
       (is (= existence-validator expected-value)))))
 

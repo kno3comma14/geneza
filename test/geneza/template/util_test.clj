@@ -58,7 +58,7 @@
     (let [input-path "./resources"
           actual-value (util/get-file-directory input-path)
           root-folder (System/getProperty "user.dir")
-          expected-value (str root-folder "/" "resources/")]
+          expected-value (str root-folder "/" "resources")]
       (is (= expected-value actual-value)))))
 
 (deftest create-aux-folder-test
