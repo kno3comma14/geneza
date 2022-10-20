@@ -11,7 +11,7 @@
   [value]
   (if (string? value)
     (->quotes-string value)
-    value)) ;; Test pending
+    value))
 
 (defn create-generic-find-query-section
   "Creates a header for a query string following a Datalog structure."
@@ -19,7 +19,7 @@
   (let [attribute-part (reduce (fn [acc, item] (str acc " " (str "?" item)))
                                ""
                                attributes)]
-    (str "'[:find" attribute-part "\n"))) ;; Test pending
+    (str "'[:find" attribute-part "\n")))
 
 (defn create-generic-tuple
   "Creates a generic tuple given tuple-name, attribute and an optional value argument."
@@ -36,7 +36,7 @@
    (let [entity "?e"
          complete-attribute (str ":" tuple-name "/" attribute)
          literal-value "_"]
-     (str "[" entity " " complete-attribute " " literal-value "]")))) ;; Tests pending
+     (str "[" entity " " complete-attribute " " literal-value "]"))))
 
 (defn create-generic-where-section
   "Creates a where section given tuple-info-list map"
