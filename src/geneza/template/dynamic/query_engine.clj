@@ -19,21 +19,28 @@
     (str "'[:find" attribute-part "\n"))) ;; Test pending
 
 (defn create-generic-tuple
-  [tuple-name attribute value]
-  (let [entity "?e"
-        complete-attribute (str ":" tuple-name "/" attribute)
-        literal-value (if (not= value nil)
-                        (prepare-value value)
-                        (str "?" attribute))]
-    (if (not= value nil)
-      (str "[" entity " " complete-attribute " " literal-value "]")
-      (str "[" entity " " complete-attribute " " "?" attribute)))) ;; Test pending
+  ([tuple-name attribute value]
+   (let [entity "?e"
+         complete-attribute (str ":" tuple-name "/" attribute)
+         literal-value (if (not= value nil)
+                         (prepare-value value)
+                         (str "?" attribute))]
+     (if (not= value nil)
+       (str "[" entity " " complete-attribute " " literal-value "]")
+       (str "[" entity " " complete-attribute " " "?" attribute))))
+  ([tuple-name attribute]
+   (let [entity "?e"
+         complete-attribute (str ":" tuple-name "/" attribute)
+         literal-value "_"]
+     (str "[" entity " " complete-attribute " " literal-value "]")))) ;; Tests pending
 
 (defn create-generic-where-section
   [tuple-info-list]
   (let [where-literal ":where\n"]
     (reduce (fn [acc, item]
-              (str acc (create-generic-tuple (:tuple-name item) (:attribute item) (:value item)) "\n"))
+              (if (contains? item :value)
+                (str acc (create-generic-tuple (:tuple-name item) (:attribute item) (:value item)) "\n")
+                (str acc (create-generic-tuple (:tuple-name item) (:attribute item)) "\n")))
             where-literal
             tuple-info-list))) ;; Test pending
 
