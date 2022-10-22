@@ -37,14 +37,14 @@
                                :endpoints [{:http-method :get, :uri "theater/movie"}
                                            {:http-method :get, :uri "theater/movie/{id}"}
                                            {:http-method :post, :uri "theater/movie"}
-                                           {:http-method :put, :uri "theater/movie"}
+                                           {:http-method :put, :uri "theater/movie/{id}"}
                                            {:http-method :delete, :uri "theater/movie/{id}"}
                                            {:http-method :get, :uri "theater/actor/{id}/movie"}]}
                               {:resource "actor",
                                :endpoints [{:http-method :get, :uri "theater/actor"}
                                            {:http-method :get, :uri "theater/actor/{id}"}
                                            {:http-method :post, :uri "theater/actor"}
-                                           {:http-method :put, :uri "theater/actor"}
+                                           {:http-method :put, :uri "theater/actor/{id}"}
                                            {:http-method :delete, :uri "theater/actor/{id}"}]}])
 
 (def config {:application-name "theater-collection" ;; This will be the structure of the config object for future project

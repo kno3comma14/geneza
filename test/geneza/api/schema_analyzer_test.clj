@@ -145,7 +145,7 @@
           expected-value [{:http-method :get, :uri "/api/v1/movie"}
                           {:http-method :get, :uri "/api/v1/movie/{id}"}
                           {:http-method :post, :uri "/api/v1/movie"}
-                          {:http-method :put, :uri "/api/v1/movie"}
+                          {:http-method :put, :uri "/api/v1/movie/{id}"}
                           {:http-method :delete, :uri "/api/v1/movie/{id}"}
                           {:http-method :get, :uri "/api/v1/actor/{id}/movie"}]]
       (is (= expected-value actual-value)))))
@@ -163,7 +163,7 @@
                                        {:http-method :post
                                         :uri "/api/v1/movie"}
                                        {:http-method :put
-                                        :uri "/api/v1/movie"}
+                                        :uri "/api/v1/movie/{id}"}
                                        {:http-method :delete
                                         :uri "/api/v1/movie/{id}"}
                                        {:http-method :get
@@ -176,7 +176,7 @@
                                        {:http-method :post
                                         :uri "/api/v1/actor"}
                                        {:http-method :put
-                                        :uri "/api/v1/actor"}
+                                        :uri "/api/v1/actor/{id}"}
                                        {:http-method :delete
                                         :uri "/api/v1/actor/{id}"}]}]]
       (is (= expected-value actual-value)))))

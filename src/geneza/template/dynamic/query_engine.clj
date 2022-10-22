@@ -47,7 +47,7 @@
                 (str acc (create-generic-tuple (:tuple-name item) (:attribute item) (:value item)) "\n")
                 (str acc (create-generic-tuple (:tuple-name item) (:attribute item)) "\n")))
             where-literal
-            tuple-info-list))) ;; Test pending
+            tuple-info-list)))
 
 (defn create-generic-query-string
   "Creates a generic complete query given a tuple-info-lisp map"
@@ -55,4 +55,4 @@
   (let [attribute-list (map (fn [item] (:attribute item)) tuple-info-list)
         find-query-section (create-generic-find-query-section attribute-list)
         where-section (create-generic-where-section tuple-info-list)]
-    (str find-query-section where-section "]"))) ;; Test pending
+    (str find-query-section where-section "]")))
