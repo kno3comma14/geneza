@@ -2,7 +2,7 @@
   (:require [geneza.api.schema-analyzer :as schema-analyzer]))
 
 (defn fetch-resource-by-id
-  [resource-info-map id])
+  [entity-info id])
 
 (defn read-resources
   [resource-info-map])
