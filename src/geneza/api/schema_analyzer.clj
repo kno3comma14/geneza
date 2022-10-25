@@ -42,7 +42,7 @@
         basic-endpoints [{:http-method :get :uri base-endpoint}
                          {:http-method :get :uri (str base-endpoint "/" "{id}")}
                          {:http-method :post :uri base-endpoint}
-                         {:http-method :put :uri base-endpoint}
+                         {:http-method :put :uri (str base-endpoint "/" "{id}")}
                          {:http-method :delete :uri (str base-endpoint "/" "{id}")}]]
     (reduce (fn [acc, att] (let [reference (:ref att)]
                              (if (not= nil (:target reference))
