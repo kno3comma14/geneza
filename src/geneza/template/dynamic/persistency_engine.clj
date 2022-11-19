@@ -19,12 +19,13 @@
 
 (defn create-ns-header
   [resource-name application-name]
-  (let [ns-start (str "ns " application-name ".persistence." resource-name "\n")
+  (let [ns-start (str "(ns " application-name ".persistence." resource-name "\n")
         ns-final (str generic-require-block ")\n")]
     (str ns-start ns-final)))
 
-(defn create-function-header [resource-name function-key]
-  (format (get-in function-templates function-key :header) resource-name))
+(defn create-function-header
+  [resource-name function-key]
+  (format (get-in function-templates [function-key :header]) resource-name))
 
 (defn fetch-resource-by-id
   [entity-info resource-name])

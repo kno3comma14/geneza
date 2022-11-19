@@ -33,7 +33,7 @@
                          (str "?" attribute))]
      (if (not= value nil)
        (str "[" entity " " complete-attribute " " literal-value "]")
-       (str "[" entity " " complete-attribute " " "?" attribute))))
+       (str "[" entity " " complete-attribute " " "?" attribute "]"))))
   ([tuple-name attribute]
    (let [entity "?e"
          complete-attribute (str ":" tuple-name "/" attribute)
@@ -58,3 +58,4 @@
         find-query-section (create-generic-find-query-section attribute-list include-id?)
         where-section (create-generic-where-section tuple-info-list)]
     (str find-query-section where-section "]")))
+
