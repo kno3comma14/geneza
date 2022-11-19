@@ -3,10 +3,17 @@
             [geneza.template.dynamic.query-engine :as query-engine]))
 
 (deftest create-generic-find-query-section-test
-  (testing "Correct behavior of create-generic-find-query-section function"
+  (testing "Correct behavior of create-generic-find-query-section function - query-id? true"
     (let [attributes '("a" "b" "c")
+          include-id? true
+          expected-value "'[:find ?e ?a ?b ?c\n"
+          actual-value (query-engine/create-generic-find-query-section attributes include-id?)]
+      (is (= expected-value actual-value))))
+  (testing "Correct behavior of create-generic-find-query-section function - query-id? true"
+    (let [attributes '("a" "b" "c")
+          include-id? false
           expected-value "'[:find ?a ?b ?c\n"
-          actual-value (query-engine/create-generic-find-query-section attributes)]
+          actual-value (query-engine/create-generic-find-query-section attributes include-id?)]
       (is (= expected-value actual-value)))))
 
 (deftest create-generic-tuple
@@ -54,6 +61,7 @@
                            {:tuple-name "bleh" :attribute "counter" :value "one"}
                            {:tuple-name "bleh" :attribute "killer" :value 1}
                            {:tuple-name "blah" :attribute "factor"}]
+          include-id? false
           expected-value "'[:find ?literal ?counter ?killer ?factor\n:where\n[?e :bla/literal ?literal\n[?e :bleh/counter \"one\"]\n[?e :bleh/killer 1]\n[?e :blah/factor _]\n]"
-          actual-value (query-engine/create-generic-query-string tuple-info-list)]
+          actual-value (query-engine/create-generic-query-string tuple-info-list include-id?)]
       (is (= expected-value actual-value)))))
