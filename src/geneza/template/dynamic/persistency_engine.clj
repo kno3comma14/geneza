@@ -27,26 +27,24 @@
   [resource-name function-key]
   (format (get-in function-templates [function-key :header]) resource-name))
 
-(defn fetch-resource-by-id
+(defn create-fetch-resource-by-id-function
   [entity-info resource-name])
 
-(defn read-resources
+(defn create-read-resources-function
   [entity-info resource-name]
   (let [query (qe/create-generic-query-string entity-info true)
         fn-header (format (get-in function-templates [:fetch-all-resources :header]) resource-name)
         fn-body (format (get-in function-templates [:fetch-all-resources :body]) query)]
     (str fn-header fn-body)))
 
-(defn softdelete-resource-by-id
+(defn create-softdelete-resource-by-id-function
   [resource-info-map id])
 
-(defn delete-resource-by-id
+(defn create-delete-resource-by-id-function
   [resource-info-map id])
 
-(defn update-resource-by-id
+(defn create-update-resource-by-id-function
   [operation-map])
 
-(defn create-resource
+(defn create-create-resource-function
   [resource-info-map])
-
-(defn create-function-body [resource-name function-key])
