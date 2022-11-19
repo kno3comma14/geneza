@@ -15,11 +15,13 @@
 
 (defn create-generic-find-query-section
   "Creates a header for a query string following a Datalog structure."
-  [attributes] ;; List of strings
+  [attributes include-id?] ;; List of strings
   (let [attribute-part (reduce (fn [acc, item] (str acc " " (str "?" item)))
                                ""
                                attributes)]
-    (str "'[:find" attribute-part "\n")))
+    (if include-id?
+      (str "'[:find ?e" attribute-part "\n")
+      (str "'[:find" attribute-part "\n"))))
 
 (defn create-generic-tuple
   "Creates a generic tuple given tuple-name, attribute and an optional value argument."
@@ -31,7 +33,7 @@
                          (str "?" attribute))]
      (if (not= value nil)
        (str "[" entity " " complete-attribute " " literal-value "]")
-       (str "[" entity " " complete-attribute " " "?" attribute))))
+       (str "[" entity " " complete-attribute " " "?" attribute "]"))))
   ([tuple-name attribute]
    (let [entity "?e"
          complete-attribute (str ":" tuple-name "/" attribute)
@@ -51,8 +53,9 @@
 
 (defn create-generic-query-string
   "Creates a generic complete query given a tuple-info-lisp map"
-  [tuple-info-list]
+  [tuple-info-list include-id?]
   (let [attribute-list (map (fn [item] (:attribute item)) tuple-info-list)
-        find-query-section (create-generic-find-query-section attribute-list)
+        find-query-section (create-generic-find-query-section attribute-list include-id?)
         where-section (create-generic-where-section tuple-info-list)]
     (str find-query-section where-section "]")))
+

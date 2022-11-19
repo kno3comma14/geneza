@@ -6,7 +6,8 @@
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [com.datomic/datomic-free "0.9.5697"]
                  [org.clojure/java.classpath "1.0.0"]
-                 [selmer "1.12.53"]]
+                 [selmer "1.12.53"]
+                 [cljfmt "0.9.0"]]
   :main ^:skip-aot geneza.core
   :target-path "target/%s"
   :resource-paths ["resources"]
