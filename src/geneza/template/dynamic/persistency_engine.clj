@@ -5,7 +5,7 @@
 (def generic-require-block "(:require [datomic.api :as datomic-api])")
 
 (def function-templates {:fetch-resource-by-id {:header "(defn fetch-%s-by-id [db id]\n"
-                                                :body "(d/q %s db)"}
+                                                :body "(d/q %s db id)"}
                          :fetch-all-resources {:header "(defn fetch-all-%s [db]\n"
                                                :body "(d/q %s db))"}
                          :soft-delete-resource-by-id {:header "(defn soft-delete-%s-by-id [connection id]\n"
@@ -28,7 +28,11 @@
   (format (get-in function-templates [function-key :header]) resource-name))
 
 (defn build-fetch-resource-by-id-function
-  [entity-info resource-name])
+  [entity-info resource-name]
+  (let [query (qe/create-generic-query-string entity-info true)
+        fn-header (format (get-in function-templates [:fetch-resource-by-id :header]) resource-name)
+        fn-body (format (get-in function-templates [:fetch-resource-by-id :body]) query)]
+    (str fn-header fn-body)))
 
 (defn build-read-resources-function
   [entity-info resource-name]
