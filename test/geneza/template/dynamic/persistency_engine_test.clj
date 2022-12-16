@@ -6,7 +6,7 @@
   (testing "Correct behavior of create-ns-header function"
     (let [resource-name "karaota"
           application-name "karaota-manager"
-          expected-value "(ns karaota-manager.persistence.karaota\n(:require [datomic.api :as datomic-api]))\n"
+          expected-value "(ns karaota-manager.persistence.karaota\n(:require [datomic.api :as d]))\n"
           actual-value (pe/create-ns-header resource-name application-name)]
       (is (= expected-value actual-value)))))
 
@@ -40,13 +40,13 @@
           actual-value (pe/build-fetch-resource-by-id-function entity-info resource-name)]
       (is (= expected-value actual-value)))))
 
-(deftest soft-delete-resource-by-id-test)
-
-(deftest delete-resource-by-id-test)
-
 (deftest update-resource-by-id-test)
 
 (deftest create-resource-test)
 
+
+(deftest soft-delete-resource-by-id-test)
+
+(deftest delete-resource-by-id-test)
 
 

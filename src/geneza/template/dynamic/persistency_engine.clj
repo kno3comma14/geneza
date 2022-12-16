@@ -2,7 +2,7 @@
   (:require [geneza.api.schema-analyzer :as schema-analyzer]
             [geneza.template.dynamic.query-engine :as qe]))
 
-(def generic-require-block "(:require [datomic.api :as datomic-api])")
+(def generic-require-block "(:require [datomic.api :as d])")
 
 (def function-templates {:fetch-resource-by-id {:header "(defn fetch-%s-by-id [db id]\n"
                                                 :body "(d/q %s db id)"}
@@ -10,11 +10,11 @@
                                                :body "(d/q %s db))"}
                          :soft-delete-resource-by-id {:header "(defn soft-delete-%s-by-id [connection id]\n"
                                                       :body ""}
-                         :delete-resource-by-id {:header "(defn delete-%s-by-id [db id]\n"
+                         :delete-resource-by-id {:header "(defn delete-%s-by-id [id connection]\n"
                                                  :body ""}
-                         :update-resource-by-id {:header "(defn update-%s-by-id [db id entity-data]\n"
+                         :update-resource-by-id {:header "(defn update-%s-by-id [id entity-data connection]\n"
                                                  :body ""}
-                         :create-resource {:header "(defn create-%s [db entity-data]\n"
+                         :create-resource {:header "(defn create-%s [entity-data connection]\n"
                                            :body ""}})
 
 (defn create-ns-header
@@ -48,7 +48,8 @@
   [resource-info-map id])
 
 (defn build-update-resource-by-id-function
-  [operation-map])
+  [resource-info-map]
+  )
 
 (defn build-create-resource-function
   [resource-info-map])
