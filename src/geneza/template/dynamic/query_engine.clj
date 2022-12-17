@@ -1,17 +1,5 @@
-(ns geneza.template.dynamic.query-engine)
-
-(defn- ->quotes-string
-  "Transforms a target string to a quoted string."
-  [target]
-  (let [quote-wrapper "\""]
-    (str quote-wrapper target quote-wrapper)))
-
-(defn- prepare-value
-  "Prepares a value depending on it's type."
-  [value]
-  (if (string? value)
-    (->quotes-string value)
-    value))
+(ns geneza.template.dynamic.query-engine
+  (:require [geneza.template.util :as util]))
 
 (defn create-generic-find-query-section
   "Creates a header for a query string following a Datalog structure."
@@ -20,22 +8,22 @@
                                ""
                                attributes)]
     (if include-id?
-      (str "'[:find ?e" attribute-part "\n")
+      (str "'[:find ?eid" attribute-part " :in $ ?eid" "\n")
       (str "'[:find" attribute-part "\n"))))
 
 (defn create-generic-tuple
   "Creates a generic tuple given tuple-name, attribute and an optional value argument."
   ([tuple-name attribute value]
-   (let [entity "?e"
+   (let [entity "?eid"
          complete-attribute (str ":" tuple-name "/" attribute)
          literal-value (if (not= value nil)
-                         (prepare-value value)
+                         (util/prepare-value value)
                          (str "?" attribute))]
      (if (not= value nil)
        (str "[" entity " " complete-attribute " " literal-value "]")
        (str "[" entity " " complete-attribute " " "?" attribute "]"))))
   ([tuple-name attribute]
-   (let [entity "?e"
+   (let [entity "?eid"
          complete-attribute (str ":" tuple-name "/" attribute)
          literal-value "_"]
      (str "[" entity " " complete-attribute " " literal-value "]"))))
