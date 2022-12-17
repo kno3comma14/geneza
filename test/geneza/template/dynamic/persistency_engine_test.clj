@@ -25,7 +25,7 @@
                        {:tuple-name "karaota" :attribute "killer" :value nil}
                        {:tuple-name "karaota" :attribute "factor" :value nil}]
           resource-name "karaota"
-          expected-value "(defn fetch-all-karaota [db]\n(d/q '[:find ?e ?literal ?counter ?killer ?factor\n:where\n[?e :karaota/literal ?literal]\n[?e :karaota/counter ?counter]\n[?e :karaota/killer ?killer]\n[?e :karaota/factor ?factor]\n] db))"
+          expected-value "(defn fetch-all-karaota [db]\n(d/q '[:find ?eid ?literal ?counter ?killer ?factor :in $ ?eid\n:where\n[?eid :karaota/literal ?literal]\n[?eid :karaota/counter ?counter]\n[?eid :karaota/killer ?killer]\n[?eid :karaota/factor ?factor]\n] db))"
           actual-value (pe/build-read-resources-function entity-info resource-name)]
       (is (= expected-value actual-value)))))
 
@@ -36,14 +36,13 @@
                        {:tuple-name "karaota" :attribute "killer" :value nil}
                        {:tuple-name "karaota" :attribute "factor" :value nil}]
           resource-name "karaota"
-          expected-value "(defn fetch-karaota-by-id [db id]\n(d/q '[:find ?e ?literal ?counter ?killer ?factor\n:where\n[?e :karaota/literal ?literal]\n[?e :karaota/counter ?counter]\n[?e :karaota/killer ?killer]\n[?e :karaota/factor ?factor]\n] db id)"
+          expected-value "(defn fetch-karaota-by-id [db id]\n(d/q '[:find ?eid ?literal ?counter ?killer ?factor :in $ ?eid\n:where\n[?eid :karaota/literal ?literal]\n[?eid :karaota/counter ?counter]\n[?eid :karaota/killer ?killer]\n[?eid :karaota/factor ?factor]\n] db id)"
           actual-value (pe/build-fetch-resource-by-id-function entity-info resource-name)]
       (is (= expected-value actual-value)))))
 
 (deftest update-resource-by-id-test)
 
 (deftest create-resource-test)
-
 
 (deftest soft-delete-resource-by-id-test)
 

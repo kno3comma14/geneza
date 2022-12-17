@@ -20,13 +20,13 @@
                                ""
                                attributes)]
     (if include-id?
-      (str "'[:find ?e" attribute-part "\n")
+      (str "'[:find ?eid" attribute-part " :in $ ?eid" "\n")
       (str "'[:find" attribute-part "\n"))))
 
 (defn create-generic-tuple
   "Creates a generic tuple given tuple-name, attribute and an optional value argument."
   ([tuple-name attribute value]
-   (let [entity "?e"
+   (let [entity "?eid"
          complete-attribute (str ":" tuple-name "/" attribute)
          literal-value (if (not= value nil)
                          (prepare-value value)
@@ -35,7 +35,7 @@
        (str "[" entity " " complete-attribute " " literal-value "]")
        (str "[" entity " " complete-attribute " " "?" attribute "]"))))
   ([tuple-name attribute]
-   (let [entity "?e"
+   (let [entity "?eid"
          complete-attribute (str ":" tuple-name "/" attribute)
          literal-value "_"]
      (str "[" entity " " complete-attribute " " literal-value "]"))))

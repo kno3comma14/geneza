@@ -17,6 +17,8 @@
                          :create-resource {:header "(defn create-%s [entity-data connection]\n"
                                            :body ""}})
 
+(defn update-bla-by-id [id entity-data connection])
+
 (defn create-ns-header
   [resource-name application-name]
   (let [ns-start (str "(ns " application-name ".persistence." resource-name "\n")
@@ -41,15 +43,20 @@
         fn-body (format (get-in function-templates [:fetch-all-resources :body]) query)]
     (str fn-header fn-body)))
 
+(defn build-update-resource-by-id-function
+  [resource-info-map])
+
 (defn build-softdelete-resource-by-id-function
   [resource-info-map id])
 
 (defn build-delete-resource-by-id-function
   [resource-info-map id])
 
-(defn build-update-resource-by-id-function
-  [resource-info-map]
-  )
-
 (defn build-create-resource-function
   [resource-info-map])
+
+(comment
+  (d/transact
+   conn
+   [{:db/id #db/id [:db.part/user]
+     :user/firstName "Johnathan2"}]))
