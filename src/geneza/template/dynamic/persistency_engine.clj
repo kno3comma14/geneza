@@ -1,6 +1,5 @@
 (ns geneza.template.dynamic.persistency-engine
-  (:require [geneza.api.schema-analyzer :as schema-analyzer]
-            [geneza.template.dynamic.query-engine :as qe]))
+  (:require [geneza.template.dynamic.query-engine :as qe]))
 
 (def generic-require-block "(:require [datomic.api :as d])")
 
@@ -16,8 +15,6 @@
                                                  :body ""}
                          :create-resource {:header "(defn create-%s [entity-data connection]\n"
                                            :body ""}})
-
-(defn update-bla-by-id [id entity-data connection])
 
 (defn create-ns-header
   [resource-name application-name]
