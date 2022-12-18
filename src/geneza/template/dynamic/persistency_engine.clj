@@ -11,8 +11,10 @@
                                                       :body ""}
                          :delete-resource-by-id {:header "(defn delete-%s-by-id [id connection]\n"
                                                  :body ""}
-                         :update-resource-by-id {:header "(defn update-%s-by-id [id entity-data connection]\n"
-                                                 :body ""}
+                         :update-resource-by-id {:header "(defn update-%s-by-id [connection id attribute new-value]\n"
+                                                 :body "(let [entity (d/entity (d/db connection) id)\n
+      tx-value [[:db/add id attribute new-value]]]\n
+  tx-value))"}
                          :create-resource {:header "(defn create-%s [entity-data connection]\n"
                                            :body ""}})
 
@@ -41,7 +43,11 @@
     (str fn-header fn-body)))
 
 (defn build-update-resource-by-id-function
-  [resource-info-map])
+  [resource-info-map]
+  (let [resource-name (:name resource-info-map)
+        fn-header (format (get-in function-templates [:update-resource-by-id :header]) resource-name)
+        fn-body (get-in function-templates [:update-resource-by-id :body])]
+    (str fn-header fn-body)))
 
 (defn build-softdelete-resource-by-id-function
   [resource-info-map id])
