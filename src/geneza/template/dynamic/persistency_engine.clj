@@ -43,9 +43,8 @@
     (str fn-header fn-body)))
 
 (defn build-update-resource-by-id-function
-  [resource-info-map]
-  (let [resource-name (:name resource-info-map)
-        fn-header (format (get-in function-templates [:update-resource-by-id :header]) resource-name)
+  [resource-name]
+  (let [fn-header (format (get-in function-templates [:update-resource-by-id :header]) resource-name)
         fn-body (get-in function-templates [:update-resource-by-id :body])]
     (str fn-header fn-body)))
 
@@ -59,7 +58,4 @@
   [resource-info-map])
 
 (comment
-  (d/transact
-   conn
-   [{:db/id #db/id [:db.part/user]
-     :user/firstName "Johnathan2"}]))
+  (build-update-resource-by-id-function "books"))
