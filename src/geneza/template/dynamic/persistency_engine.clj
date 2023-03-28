@@ -16,7 +16,7 @@
       tx-value [[:db/add id attribute new-value]]]\n
   tx-value))"}
                          :create-resource {:header "(defn create-%s [entity-data connection]\n"
-                                           :body ""}})
+                                           :body "(d/transact connection entity-data)"}})
 
 (defn create-ns-header
   [resource-name application-name]
@@ -55,7 +55,9 @@
   [resource-info-map id])
 
 (defn build-create-resource-function
-  [resource-info-map])
+  [resource-name]
+  (let [fn-header (format (get-in function-templates [:create-resource :header]) resource-name)
+        fn-body (get-in function-templates [:create-resource :body])]
+    (str fn-header fn-body)))
 
-(comment
-  (build-update-resource-by-id-function "books"))
+
