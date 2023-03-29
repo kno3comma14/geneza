@@ -54,8 +54,18 @@
           actual-value (pe/build-create-resource-function resource-name)]
       (is (= expected-value actual-value)))))
 
-(deftest build-softdelete-resource-by-id-function-test)
+(deftest build-softdelete-resource-by-id-function-test
+  (testing "Correct behavior of build-softdelete-resource-by-id-function function"
+    (let [resource-name "karaota"
+          expected-value "(defn soft-delete-karaota-by-id [connection id delete-flag]\n(let [entity (d/entity (d/db connection) id)\n\n      tx-value [[:db/add id delete-flag false]]]\n\n  tx-value))"
+          actual-value (pe/build-softdelete-resource-by-id-function resource-name)]
+      (is (= expected-value actual-value)))))
 
-(deftest build-delete-resource-by-id-function-test)
+(deftest build-delete-resource-by-id-function-test
+  (testing "Correct behavior of build-delete-resource-by-id-function function"
+    (let [resource-name "karaota"
+          expected-value "(defn delete-karaota-by-id [id connection]\n(d/transact connection [[:db.fn/retractEntity id]])"
+          actual-value (pe/build-delete-resource-by-id-function resource-name)]
+      (is (= expected-value actual-value)))))
 
 

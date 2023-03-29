@@ -7,10 +7,12 @@
                                                 :body "(d/q %s db id)"}
                          :fetch-all-resources {:header "(defn fetch-all-%s [db]\n"
                                                :body "(d/q %s db))"}
-                         :soft-delete-resource-by-id {:header "(defn soft-delete-%s-by-id [connection id]\n"
-                                                      :body ""}
+                         :soft-delete-resource-by-id {:header "(defn soft-delete-%s-by-id [connection id delete-flag]\n"
+                                                      :body "(let [entity (d/entity (d/db connection) id)\n
+      tx-value [[:db/add id delete-flag false]]]\n
+  tx-value))"}
                          :delete-resource-by-id {:header "(defn delete-%s-by-id [id connection]\n"
-                                                 :body ""}
+                                                 :body "(d/transact connection [[:db.fn/retractEntity id]])"}
                          :update-resource-by-id {:header "(defn update-%s-by-id [connection id attribute new-value]\n"
                                                  :body "(let [entity (d/entity (d/db connection) id)\n
       tx-value [[:db/add id attribute new-value]]]\n
@@ -49,10 +51,16 @@
     (str fn-header fn-body)))
 
 (defn build-softdelete-resource-by-id-function
-  [resource-info-map id])
+  [resource-name]
+  (let [fn-header (format (get-in function-templates [:soft-delete-resource-by-id :header]) resource-name)
+        fn-body (get-in function-templates [:soft-delete-resource-by-id :body])]
+    (str fn-header fn-body)))
 
 (defn build-delete-resource-by-id-function
-  [resource-info-map id])
+  [resource-name]
+  (let [fn-header (format (get-in function-templates [:delete-resource-by-id :header]) resource-name)
+        fn-body (get-in function-templates [:delete-resource-by-id :body])]
+    (str fn-header fn-body)))
 
 (defn build-create-resource-function
   [resource-name]
