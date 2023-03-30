@@ -14,5 +14,6 @@
   :resource-paths ["resources"]
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}
-             :dev {:dependencies [[lambdaisland/kaocha "1.80.1274"]]}}
+             :dev {:dependencies [[lambdaisland/kaocha "1.80.1274"]
+                                  [lambdaisland/kaocha-cloverage "1.1.89"]]}}
   :aliases {"kaocha" ["run" "-m" "kaocha.runner"]})
