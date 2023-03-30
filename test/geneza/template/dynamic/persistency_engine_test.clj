@@ -40,12 +40,32 @@
           actual-value (pe/build-fetch-resource-by-id-function entity-info resource-name)]
       (is (= expected-value actual-value)))))
 
-(deftest update-resource-by-id-test)
+(deftest build-update-resources-by-id-function-test
+  (testing "Correct behavior of build-update-resources-by-id-function function"
+    (let [resource-name "karaota"
+          expected-value "(defn update-karaota-by-id [connection id attribute new-value]\n(let [entity (d/entity (d/db connection) id)\n\n      tx-value [[:db/add id attribute new-value]]]\n\n  tx-value))"
+          actual-value (pe/build-update-resource-by-id-function resource-name)]
+      (is (= expected-value actual-value)))))
 
-(deftest create-resource-test)
+(deftest build-create-resource-function-test
+  (testing "Correct behavior of build-create-resource-function function"
+    (let [resource-name "karaota"
+          expected-value "(defn create-karaota [entity-data connection]\n(d/transact connection entity-data)"
+          actual-value (pe/build-create-resource-function resource-name)]
+      (is (= expected-value actual-value)))))
 
-(deftest soft-delete-resource-by-id-test)
+(deftest build-softdelete-resource-by-id-function-test
+  (testing "Correct behavior of build-softdelete-resource-by-id-function function"
+    (let [resource-name "karaota"
+          expected-value "(defn soft-delete-karaota-by-id [connection id delete-flag]\n(let [entity (d/entity (d/db connection) id)\n\n      tx-value [[:db/add id delete-flag false]]]\n\n  tx-value))"
+          actual-value (pe/build-softdelete-resource-by-id-function resource-name)]
+      (is (= expected-value actual-value)))))
 
-(deftest delete-resource-by-id-test)
+(deftest build-delete-resource-by-id-function-test
+  (testing "Correct behavior of build-delete-resource-by-id-function function"
+    (let [resource-name "karaota"
+          expected-value "(defn delete-karaota-by-id [id connection]\n(d/transact connection [[:db.fn/retractEntity id]])"
+          actual-value (pe/build-delete-resource-by-id-function resource-name)]
+      (is (= expected-value actual-value)))))
 
 
