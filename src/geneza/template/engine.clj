@@ -13,8 +13,7 @@
   [template-file-url template-map target-folder-path]
   (let [pre-template (parse-template template-file-url template-map)
         built-path (util/get-file-directory target-folder-path)]
-    (with-open [w (io/writer built-path)]
-      (.write w pre-template))))
+    (spit built-path pre-template)))
 
 (defn- extract-folders
   [project-structure-info]
