@@ -50,7 +50,7 @@
 (deftest build-create-resource-function-test
   (testing "Correct behavior of build-create-resource-function function"
     (let [resource-name "karaota"
-          expected-value "(defn create-karaota [entity-data connection]\n(d/transact connection entity-data)"
+          expected-value "(defn create-karaota [entity-data connection]\n(d/transact connection entity-data))"
           actual-value (pe/build-create-resource-function resource-name)]
       (is (= expected-value actual-value)))))
 

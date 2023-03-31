@@ -8,3 +8,5 @@
 ;;           expected-result ""
 ;;           actual-result (route-engine/generate-source-routes routes-data)]
 ;;       (is (= expected-result actual-result)))))
+
+(def routes-map {})

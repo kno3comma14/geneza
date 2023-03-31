@@ -18,7 +18,7 @@
       tx-value [[:db/add id attribute new-value]]]\n
   tx-value))"}
                          :create-resource {:header "(defn create-%s [entity-data connection]\n"
-                                           :body "(d/transact connection entity-data)"}})
+                                           :body "(d/transact connection entity-data))"}})
 
 (defn create-ns-header
   [resource-name application-name]
