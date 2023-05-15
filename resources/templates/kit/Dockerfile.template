@@ -1,8 +1,0 @@
-FROM eclipse-temurin:11
-
-RUN mkdir /{{application-name}}/app
-WORKDIR /{{application-name}}/app
-
-COPY target/{{application-name}}.jar /{{application-name}}/app/{{application-name}}.jar
-
-CMD ["java", "-jar", "/{{application-name}}/app/{{application-name}}.jar"]
