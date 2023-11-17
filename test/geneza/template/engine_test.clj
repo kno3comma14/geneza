@@ -6,25 +6,25 @@
 
 (def project-clj-file "resources/temp/project.clj")
 (def project-structure-info {:folder-structure {"" [{:template "project.clj.template"
-                                                     :template-path "kit"
+                                                     :template-path "clojure/pedestal"
                                                      :template-map {:project-name "test-project"
                                                                     :project-description "Project for testing purposes"
                                                                     :project-version "v1.0.0"
                                                                     :project-url "http://testies.com"}
                                                      :file-path "resources/temp/project2.clj"}
                                                     {:template "Dockerfile.template"
-                                                     :template-path "kit"
+                                                     :template-path "clojure/pedestal"
                                                      :template-map {:application-name "test-project"}
                                                      :file-path "resources/temp/Dockerfile"}]
                                                 "another-folder" [{:template "Makefile.template"
-                                                                   :template-path "kit"
+                                                                   :template-path "clojure/pedestal"
                                                                    :template-map {}
                                                                    :file-path "resources/temp/another-folder/Makefile"}]}
                              :context {}}) ;; temporal reference
 
 (deftest parse-template-test
   (testing "Templates are being parsed correctly"
-    (let [template-url "kit/project.clj.template"
+    (let [template-url "clojure/pedestal/project.clj.template"
           template-map {:project-name "test-project"
                         :project-description "Project for testing purposes"
                         :project-version "v1.0.0"
@@ -35,7 +35,7 @@
 
 (deftest build-template-test
   (testing "Templates are being built correctly"
-    (let [template-file-url "kit/project.clj.template"
+    (let [template-file-url "clojure/pedestal/project.clj.template"
           template-map {:project-name "test-project"
                         :project-description "Project for testing purposes"
                         :project-version "v1.0.0"
